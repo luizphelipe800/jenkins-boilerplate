@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  jenkins:
+    container_name: jenkins-teste
+    image: jenkins/jenkins:lts-jdk11
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+  agent:
+    container_name: jenkins-agent
+    image: jenkins/ssh-agent:jdk11
+    privileged: true
+    user: root
+    expose:
+      - 22
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCo4TWjLh+cqHmLyCIBvsyGW4dti/1XqQDVw5L7wsD2Yw9T138oGkfblfWNsTC/vZV1tKIiobyooBHEQVNKbP6FdlfUqHtulEY9dPRxYWIb1R0U+vh/dpbn72WAxylSLD9V51VFPdnUcn5MKu/Kn4rWd+c3FfGWG+yHq9eQ9cLZQS2esg5L0FWc76yzslLJ0YbU4VFMwoaG8f6W0OA0RD4gjMkEUySpzmFoqx6XKol2HrFVixnZuCv8yCoOFuXCO8a44aqOIMx3Z5I3LbuizQqTrAQOpRDdPpu+2PvZ2NzYOtpa+9tjix86No4S7++mimDhmxRkMTHiMZzBXEy5zE56Ip8UO+TN3FfKKrcZPFSHD+ozkBjVeQ5Q6A3FwKgKa4bFlTukB86FaowEoANJRC59PJiw7U7wmhoHYlE+WktSDPYV60ZUkyfF+I3XJEviklwr7N2VeX+/4KMc1OEYmWgyMTkNvFROogixEz2ShKvBXkt1SIFbFx2PPuoCiWBs5pk= luiz@luiz
