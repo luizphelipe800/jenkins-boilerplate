@@ -1,17 +1,14 @@
 pipeline {
     agent any
 
+    tools { nodejs "node16" }
+
     stages {
-        stage('Hello') {
+        stage('running script') {
             steps {
-                echo 'Hello World'
+                sh 'node index.js'
             }
         }
         
-        stage('bye') {
-            steps {
-                echo 'Bye World!'
-            }
-        }
     }
 }
